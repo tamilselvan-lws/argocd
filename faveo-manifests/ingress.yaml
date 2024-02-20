@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    name: faveo-ingress
+    namespace: test
+
+spec:
+   tls:
+   - hosts:
+     - test.thetamilselvan.in
+     secretName: faveo-tls
+   rules:
+    - host: test.thetamilselvan.in
+      http:
+        paths:
+         - path: /
+           pathType: Prefix
+           backend:
+             service:
+               name: faveo-svc
+               port:
+                 number: 80

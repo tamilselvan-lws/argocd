@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: faveo-svc
+  namespace: test
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: faveo-pods
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faveo-deploy
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faveo-pods
+  template:
+    metadata:
+      labels:
+        app: faveo-pods
+    spec:
+      containers:
+      - name: faveo-apache
+        image: ladybird/faveo-k8s-apache2
+        resources:
+          limits:
+            memory: 700Mi
+            cpu: 1
+          requests:
+            memory: 600Mi
+            cpu: 800m
+        livenessProbe:
+          httpGet:
+            path: /probe.php
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /probe.php
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 1
+        volumeMounts:
+        - name: volume-data
+          mountPath: /var/www/html
+#        - name: cm
+#          mountPath: /var/www/html/.env
+#          subPath: .env
+      initContainers:
+      - name: fetch
+        image: ladybird/faveo-fetcher
+        command: ['sh','-c','apt update;apt install git -y; curl https://billing.faveohelpdesk.com/download/faveo\?order_number\=85070569\&serial_key\=5HINJHDGDIBK0000 --output faveo.zip; unzip faveo.zip -d html;chown -R www-data:www-data /html']
+        volumeMounts:
+        - name: volume-data
+          mountPath: /html
+      volumes:
+      - name: volume-data
+        emptyDir: {}
+#      - name: cm
+#        configMap:
+#          name: faveo-env
