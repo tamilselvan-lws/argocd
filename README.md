@@ -109,3 +109,55 @@ kubectl get certificate
 ```
 
 From the output of the above command the READY field must be True. Navigate to your domain in your browser to test. You’ll find the padlock to the left of the address bar in your browser, signifying that your connection is secure.
+
+
+### Step 6: Deploying a faveo application to Argo CD
+
+On the terminal, create a secret by running the following command:
+
+```
+argocd repo add "https://github.com/tamilselvan-lws/argocd.git" --username "tamilselvan-lws" --password "ichicrbchb3rc3eojo3jce3e"
+```
+
+### Step 7: Create the Faveo installation file
+
+```yaml
+#argocd-application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/tamilselvan-lws/argocd.git
+    targetRevision: HEAD
+    path: faveo-manifests
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+```
+Apply the manifest to the cluster as follows:
+
+```
+kubectl apply -f nginx.yaml
+```
+
+Go to the UI and view the applications. Make sure that the sync status is OK. Go back to the terminal and view the running pods and services:
+
+```
+kubectl get application
+kubectl get ingress
+kubectl get pods
+kubectl get services
+```
+Go to Github by copying the link from the output message of the above command. Approve and merge the MR. Go back to the terminal and run the following:
+
+```
+argocd app sync argocd-application
+kubectl get pods
+```

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: faveo-svc
-  namespace: faveo-test
+  namespace: default
 spec:
   type: ClusterIP
   ports:
@@ -15,7 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: faveo-deploy
-  namespace: faveo-test
+  namespace: default
 spec:
   replicas: 1
   selector:
