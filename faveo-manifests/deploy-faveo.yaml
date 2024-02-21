@@ -52,12 +52,12 @@ spec:
           timeoutSeconds: 5
           periodSeconds: 10
           failureThreshold: 1
-          #        volumeMounts:
-          #        - name: volume-data
-          #          mountPath: /var/www/html
-          #        - name: cm
-          #          mountPath: /var/www/html/.env
-          #          subPath: .env
+        volumeMounts:
+        - name: volume-data
+          mountPath: /var/www/html
+#        - name: cm
+#          mountPath: /var/www/html/.env
+#          subPath: .env
       initContainers:
       - name: fetch
         image: ladybird/faveo-fetcher
@@ -65,9 +65,9 @@ spec:
         volumeMounts:
         - name: volume-data
           mountPath: /html
-#      volumes:
-#      - name: volume-data
-#        emptyDir: {}
+      volumes:
+      - name: volume-data
+        emptyDir: {}
 #      - name: cm
 #        configMap:
 #          name: faveo-env
