@@ -55,5 +55,4 @@ data:
   ALGOLIA_SECRET                    = 
   DB_INSTALL                        = 1
   APP_ENV                           = production
-
-  JWT_SECRET=G4w7pA6rLoHr5aoohZ6M8SVfC5833zLFqzivNvDYd6oc7AoYfOkpyEGlBAuhlyzB
+  JWT_SECRET                        = G4w7pA6rLoHr5aoohZ6M8SVfC5833zLFqzivNvDYd6oc7AoYfOkpyEGlBAuhlyzB
