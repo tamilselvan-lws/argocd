@@ -1,6 +1,6 @@
 # Installing Argo CD using helm
 
-Argo CD is a powerful continuous delivery tool that helps developers automate the deployment process of their applications. In this blog, we will cover the steps to install Argo CD using Helm, a package manager for Kubernetes.
+Argo CD is a powerful continuous delivery tool that helps developers automate the deployment process of their applications. we will cover the steps to install Argo CD using Helm, a package manager for Kubernetes.
 
 ### Step 1: Add the Argo CD Helm repository
 
