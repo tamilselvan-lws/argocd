@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: faveo-mariadb-pvc
+  namespace: faveo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faveo-mariadb
+  namespace: faveo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faveo-mariadb
+  template:
+    metadata:
+      labels:
+        app: faveo-mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:10.6
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: faveo
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mariadb-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-persistent-storage
+          persistentVolumeClaim:
+            claimName: faveo-mariadb-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: faveo-mariadb
+  namespace: faveo
+spec:
+  selector:
+    app: faveo-mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
