@@ -5,7 +5,7 @@ metadata:
   namespace: faveo-thetamilselvan
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -26,21 +26,27 @@ spec:
         app: faveo-mariadb
     spec:
       containers:
-        - name: mariadb
-          image: mariadb:10.6
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: faveo
-          ports:
-            - containerPort: 3306
-              name: mysql
-          volumeMounts:
-            - name: mariadb-persistent-storage
-              mountPath: /var/lib/mysql
-      volumes:
+      - name: mariadb
+        image: mariadb:10.6
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: faveo
+        - name: MYSQL_DATABASE
+          value: faveo
+        - name: MYSQL_USER
+          value: faveo
+        - name: MYSQL_PASSWORD
+          value: faveo
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
         - name: mariadb-persistent-storage
-          persistentVolumeClaim:
-            claimName: faveo-mariadb-pvc
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mariadb-persistent-storage
+        persistentVolumeClaim:
+          claimName: faveo-mariadb-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -51,6 +57,6 @@ spec:
   selector:
     app: faveo-mariadb
   ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
