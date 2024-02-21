@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
-  namespace: default
+  namespace: faveo-thetamilselvan
 spec:
   acme:
     # Email address used for ACME registration

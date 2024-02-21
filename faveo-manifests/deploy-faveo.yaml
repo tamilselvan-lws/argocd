@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: faveo-svc
-  namespace: default
+  namespace: faveo-thetamilselvan
 spec:
   type: ClusterIP
   ports:
@@ -15,7 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: faveo-deploy
-  namespace: default
+  namespace: faveo-thetamilselvan
 spec:
   replicas: 1
   selector:
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: faveo-apache
-        image: ladybird/faveo-k8s-apache2
+        image: tamilselvanlws/faveo-k8s-apache-php8.2:v1
         resources:
           limits:
             memory: 700Mi
