@@ -10,10 +10,10 @@ metadata:
 spec:
    tls:
    - hosts:
-     - test.thetamilselvan.in
+     - faveo.thetamilselvan.in
      secretName: faveo-tls
    rules:
-    - host: test.thetamilselvan.in
+    - host: faveo.thetamilselvan.in
       http:
         paths:
          - path: /
