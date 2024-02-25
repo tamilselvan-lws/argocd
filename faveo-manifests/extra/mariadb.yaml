@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: faveo-mariadb-pvc
-  namespace: default
+  namespace: faveo-thetamilselvan
 spec:
   accessModes:
   - ReadWriteOnce
@@ -14,7 +14,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: faveo-mariadb
-  namespace: default
+  namespace: faveo-thetamilselvan
 spec:
   replicas: 1
   selector:
