@@ -55,9 +55,9 @@ spec:
         volumeMounts:
         - name: volume-data
           mountPath: /var/www/html
-#        - name: cm
-#          mountPath: /var/www/html/.env
-#          subPath: .env
+        - name: cm
+          mountPath: /var/www/html/.env
+          subPath: .env
       initContainers:
       - name: fetch
         image: ladybird/faveo-fetcher
@@ -68,6 +68,6 @@ spec:
       volumes:
       - name: volume-data
         emptyDir: {}
-#      - name: cm
-#        configMap:
-#          name: faveo-env
+      - name: cm
+        configMap:
+          name: faveo-env

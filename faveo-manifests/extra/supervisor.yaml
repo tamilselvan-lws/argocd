@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: faveo-supervisor
-        image: ladybird/faveo-k8s-supervisor
+        image: tamilselvanlws/faveo-supervisor-php8.2:v1
         resources:
           limits:
             memory: 1024Mi
